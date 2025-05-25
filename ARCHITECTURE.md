@@ -232,7 +232,7 @@ flowchart LR
   WS -- "Pub/Sub/Queue" --> Redis
   UA -. "WebRTC Signaling" .- WS
   UB -. "WebRTC Signaling" .- WS
-  UA == "WebRTC Media" == UB
+  UA == "WebRTC Media" === UB
   UA -- "TURN Media (if needed)" --> TURN
   UB -- "TURN Media (if needed)" --> TURN
 ```
