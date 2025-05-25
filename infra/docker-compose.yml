@@ -1,0 +1,57 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  turn:
+    image: coturn/coturn:latest
+    command: ["-c","/etc/coturn/turnserver.conf"]
+    volumes:
+      - ./turnserver.conf:/etc/coturn/turnserver.conf
+    ports:
+      - "3478:3478/udp"
+      - "3478:3478/tcp"
+
+  api:
+    build: ../backend/api
+    env_file: ../.env
+    depends_on: [mongo]
+    ports:
+      - "4000:4000"
+    volumes:
+      - ../backend/api:/app
+      - ../shared:/app/shared
+      - /app/node_modules 
+
+  ws:
+    build: ../backend/ws
+    env_file: ../.env
+    depends_on: [redis, mongo]
+    ports:
+      - "5002:5002"
+    volumes:
+      - ../backend/ws:/app
+      - ../shared:/app/shared
+      - /app/node_modules
+
+  web:
+    build: ../frontend
+    depends_on: [api, ws]
+    ports:
+      - "3000:80"
+    volumes:
+      - ../frontend:/app
+
+volumes:
+  mongo_data:
+  redis_data:

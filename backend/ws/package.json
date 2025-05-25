@@ -1,0 +1,20 @@
+{
+  "name": "@speedconnect/ws",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "jsonwebtoken": "^9.0.0",
+    "socket.io": "^4.7.5",
+    "@socket.io/redis-adapter": "^8.2.0",
+    "redis": "^4.6.0",
+    "mongoose": "^8"
+  },
+  "devDependencies": {
+    "nodemon": "^3"
+  }
+}
